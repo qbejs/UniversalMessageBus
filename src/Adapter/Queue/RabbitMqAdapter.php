@@ -2,16 +2,22 @@
 
 namespace MessageBus\Adapter\Queue;
 
+
 use MessageBus\Adapter\Queue\QueueAdapter;
+use PhpAmqpLib\Channel\AbstractChannel;
+use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 class RabbitMqAdapter implements QueueAdapter
 {
-    private $connection;
-    private $channel;
-    private $queueName;
+    private AMQPStreamConnection $connection;
+    private AbstractChannel|AMQPChannel $channel;
+    private string $queueName;
 
+    /**
+     * @throws \Exception
+     */
     public function __construct(string $host, int $port, string $user, string $password, string $queueName)
     {
         $this->connection = new AMQPStreamConnection($host, $port, $user, $password);
@@ -36,6 +42,9 @@ class RabbitMqAdapter implements QueueAdapter
         return null;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function __destruct()
     {
         $this->channel->close();
