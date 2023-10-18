@@ -2,7 +2,6 @@
 
 namespace MessageBus\Adapter\Queue;
 
-
 use MessageBus\Adapter\Queue\QueueAdapter;
 use PhpAmqpLib\Channel\AbstractChannel;
 use PhpAmqpLib\Channel\AMQPChannel;
